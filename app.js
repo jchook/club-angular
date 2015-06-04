@@ -9,6 +9,9 @@ angular
 	// Member Directory
 	.controller('memberDirectoryCtl', ['$scope', function($scope){
 		$scope.members = memberDirectoryData;
+		$scope.findInName = function(member) {
+			return member.first_name.match($scope.query) || member.last_name.match($scope.query);
+		};
 	}])
 
 	// Fancy Dancy
@@ -25,9 +28,5 @@ angular
 				}
 			}
 		};
-	})
-
-	.filter('yesno', function(val){
-		return val ? 'true' : 'false';
 	})
 ;

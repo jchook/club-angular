@@ -27,7 +27,7 @@
 			<form>
 				<input type="text" ng-model="query" placeholder="Search for a member...">
 			</form>
-			<ul class="members" ng-repeat="member in members | filter:query | orderBy:'last_name'">
+			<ul class="members" ng-repeat="member in members | filter:findInName | orderBy:'last_name'">
 				<li class="member expanded-{{ expand }}">
 					<h3 ng-click="expand = !expand">{{member.last_name}}, {{member.first_name}}</h3>
 					<div class="details animation-slide" ng-show="expand">
