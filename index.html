@@ -118,7 +118,7 @@
 						<li ng-repeat="n in getPages()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
 							<a href>{{n}}</a>
 						</li>
-						<li ng-class="{disabled: currentPage == (maxPage() || 1)}">
+						<li ng-class="{disabled: currentPage == maxPage()}">
 							<a href ng-click="nextPage()">Next</a>
 						</li>
 					</ul>
