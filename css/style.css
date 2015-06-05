@@ -1,0 +1,100 @@
+/*
+	red: #d90000
+	dkgray: #252525
+	mdgray: #5a5a5a
+	ltgray: #c0c0c0
+*/
+
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
+
+::-webkit-input-placeholder { color: #5a5a5a; }
+:-moz-placeholder { color: #5a5a5a; }
+::-moz-placeholder { color: #5a5a5a; }
+:-ms-input-placeholder { color: #5a5a5a; }
+
+html {
+	
+}
+
+body {
+	font-size: 12px;
+	font-family: 'Oswald', sans-serif;
+	background: black;
+	color: white;
+}
+
+a, a:hover, a:visited, a:active {
+	color: white;
+	cursor: pointer;
+	border-bottom: 1px solid #d90000;
+	padding-bottom: 1px;
+	text-decoration: none;
+}
+
+h1 > img {
+	display: block;
+	width: 48rem;
+	height: auto;
+	margin: 12px auto;
+}
+
+h1 > span {
+	visibility: hidden;
+}
+
+table {
+	width: 100%;
+	margin: 0 auto;
+}
+table > thead > tr > th {
+	color: #FFF;
+}
+table > tbody > tr > td {
+	color: #c0c0c0;
+}
+table > tbody > tr.member.expanded-true > td {
+	color: #FFF;
+}
+table > tbody > tr > td,
+table > thead > tr > td {
+	padding: 12px 12px 5px;
+}
+table tbody > tr > td + td {
+	text-align: right;
+	color: #5a5a5a;
+}
+table thead > tr > th + th {
+	text-align: right;
+}
+table > tbody > tr {
+	cursor: pointer;
+	padding: 12px;
+	border-left: 1px solid #252525;
+}
+table > tbody > tr.expanded-true {
+	border-left-color: #d90000;
+}
+table .detail {
+	line-height: 1.3em;
+	margin-bottom: 1em;
+}
+
+input, select {
+	font-family: 'Oswald', sans-serif;
+	border: none;
+	background: transparent;
+	color: white;
+	padding-left: 1rem;
+	border-left: 1px solid #252525;
+	margin-bottom: 10px;
+}
+form > .form-group > div + div {
+	text-align: right;
+}
+form input:focus {
+	border-left-color: #d90000;
+}
+
+.per-page-selector {
+	margin: 20px 0;
+}
