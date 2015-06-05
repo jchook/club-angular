@@ -1,10 +1,10 @@
 // Wes Roberts
-// 2015-06-03
+// 2015-06-04
 //
 angular
 
 	// Club Angular
-	.module('clubAngular', ['ngAnimate'])
+	.module('clubAngular', [])
 
 	// Member directory
 	.controller('memberDirectoryCtl', ['$scope', function($scope){
@@ -20,7 +20,6 @@ angular
 
 		$scope.$watch('nameFilter + stateFilter', function(){
 			$scope.updateFilters();
-			$scope.updatePagination();
 		});
 		$scope.$watch('currentPage + numPerPage', function(){
 			$scope.updatePagination();
@@ -34,10 +33,13 @@ angular
 				}
 			}
 			$scope.membersFiltered = r;
+			$scope.updatePagination();
 		};
+
 		$scope.updatePagination = function() {
 			var begin, end;
 			$scope.numPerPage = parseInt($scope.numPerPage);
+			$scope.currentPage = Math.min($scope.currentPage, $scope.maxPage());
 			begin = (($scope.currentPage - 1) * $scope.numPerPage);
 			end = begin + $scope.numPerPage;
 			$scope.membersPaginated = $scope.membersFiltered.slice(begin, end);
