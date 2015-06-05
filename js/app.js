@@ -4,7 +4,7 @@
 angular
 
 	// Club Angular
-	.module('clubAngular', ['ngAnimate', 'ui.bootstrap'])
+	.module('clubAngular', ['ngAnimate'])
 
 	// Member directory
 	.controller('memberDirectoryCtl', ['$scope', function($scope){

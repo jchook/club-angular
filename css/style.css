@@ -72,6 +72,7 @@ table > tbody > tr {
 	border-left: 1px solid #252525;
 }
 table > tbody > tr.expanded-true {
+	background-color: #111111;
 	border-left-color: #d90000;
 }
 table .detail {
