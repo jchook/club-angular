@@ -9,77 +9,82 @@ angular
 	// Member directory
 	.controller('memberDirectoryCtl', ['$scope', function($scope){
 
-		// Import data.js
-		$scope.nameFilter = '';
-		$scope.stateFilter = '';
-		$scope.members = memberDirectoryData;
-		$scope.membersFiltered = $scope.members.slice();
-		$scope.membersPaginated = $scope.members.slice(0,10);
-		$scope.currentPage = 1;
-		$scope.numPerPage = 10;
+		// Pagination & Filters
+		angular.extend($scope, {
+			
+			numPerPage: 10,
+			currentPage: 1,
+			
+			members: memberDirectoryData,
+			membersFiltered: memberDirectoryData,
+			membersPaginated: memberDirectoryData.slice(0,10),
 
-		// Filter members from the directory
-		$scope.applyFilters = function(member) {
-			return true
+			nameFilter: '',
+			stateFilter: '',
 
-				// First or last name match
-				&& (member.first_name.match($scope.nameFilter) || member.last_name.match($scope.nameFilter))
+			applyFilters: function(member) {
+				var i, j, keywords, nameMatch;
 
-				// State match required
-				&& member.state.match($scope.stateFilter)
-			;
-		};
-
-		// Pagination logic
-		$scope.getPages = function () {
-			var end = $scope.maxPage(), i, ret = [];
-			for (i = 1; i <= end; i++) {
-				ret.push(i);
-			}
-			return ret;
-		};
-
-		$scope.maxPage = function() {
-			return Math.ceil($scope.membersFiltered.length / $scope.numPerPage) || 1;
-		};
-
-		$scope.nextPage = function () {
-			if ($scope.currentPage < $scope.maxPage()) {
-				$scope.currentPage++;
-			}
-		};
-		
-		$scope.prevPage = function () {
-			if ($scope.currentPage > 1) {
-				$scope.currentPage--;
-			}
-		};
-		
-		$scope.setPage = function (n) {
-			$scope.currentPage = n;
-		};
-
-		// Update logic
-		$scope.updateFilters = function() {
-			var i, r = [];
-			for (i=0; i<$scope.members.length; i++) {
-				if ($scope.applyFilters($scope.members[i])) {
-					r.push($scope.members[i]);
+				// Match all words
+				keywords = $scope.nameFilter.split(' ');
+				nameMatch = true;
+				for (i=0, j=keywords.length; i<j; i++) {
+					nameMatch = nameMatch && [member.first_name, member.last_name].join(' ').match(keywords[i]);
 				}
-			}
-			$scope.membersFiltered = r;
-			$scope.updatePagination();
-		};
 
-		$scope.updatePagination = function() {
-			var begin, end;
-			$scope.numPerPage = parseInt($scope.numPerPage);
-			$scope.currentPage = Math.min($scope.currentPage, $scope.maxPage());
-			begin = (($scope.currentPage - 1) * $scope.numPerPage);
-			end = begin + $scope.numPerPage;
-			$scope.membersPaginated = $scope.membersFiltered.slice(begin, end);
-		};
+				return (j=0 || nameMatch) && member.state.match($scope.stateFilter);
+			},
 
+			getPages: function() {
+				var end = $scope.maxPage(), i, ret = [];
+				for (i = 1; i <= end; i++) {
+					ret.push(i);
+				}
+				return ret;
+			},
+
+			maxPage: function() {
+				return Math.ceil($scope.membersFiltered.length / $scope.numPerPage) || 1;
+			},
+
+			nextPage: function() {
+				if ($scope.currentPage < $scope.maxPage()) {
+					$scope.currentPage++;
+				}
+			},
+			
+			prevPage: function() {
+				if ($scope.currentPage > 1) {
+					$scope.currentPage--;
+				}
+			},
+			
+			setPage: function(n) {
+				$scope.currentPage = n;
+			},
+
+			updateFilters: function() {
+				var i, r = [];
+				for (i=0; i<$scope.members.length; i++) {
+					if ($scope.applyFilters($scope.members[i])) {
+						r.push($scope.members[i]);
+					}
+				}
+				$scope.membersFiltered = r;
+				$scope.updatePagination();
+			},
+
+			updatePagination: function() {
+				var begin, end;
+				$scope.numPerPage = parseInt($scope.numPerPage);
+				$scope.currentPage = Math.min($scope.currentPage, $scope.maxPage());
+				begin = (($scope.currentPage - 1) * $scope.numPerPage);
+				end = begin + $scope.numPerPage;
+				$scope.membersPaginated = $scope.membersFiltered.slice(begin, end);
+			},
+		});
+		
+		// Observers
 		$scope.$watch('nameFilter + stateFilter', $scope.updateFilters);
 		$scope.$watch('currentPage + numPerPage', $scope.updatePagination);
 
